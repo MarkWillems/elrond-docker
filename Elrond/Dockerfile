@@ -24,7 +24,8 @@ WORKDIR /home/elrond
 ENV GOPATH=/home/elrond/go 
 RUN mkdir -p $GOPATH/src/github.com/ElrondNetwork
 RUN git clone https://github.com/ElrondNetwork/elrond-go-scripts-v2
-ADD install_elrond.sh /tmp/install_elrond.sh
-RUN /tmp/install_elrond.sh
-ADD entrypoint.sh /home/elrond/entrypoint.sh
+ADD  --chown=elrond:elrond install_elrond.sh /tmp/install_elrond.sh
+RUN chmod +x /tmp/install_elrond.sh && /tmp/install_elrond.sh
+ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
+RUN chmod +x /home/elrond/entrypoint.sh
 CMD ["/home/elrond/entrypoint.sh"]
