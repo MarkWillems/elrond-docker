@@ -1,0 +1,20 @@
+version: '3.2'
+services:
+ autoupdater:
+  container_name: autoupdater
+  build:
+   context: ./ElrondUpdater/
+   dockerfile: Dockerfile
+  restart: always
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
+ elrond-1:
+  image: elrond:0.1
+  container_name: elrond-1
+  restart: unless-stopped
+  ports:
+   - 8081:8080
+  volumes:
+   - "${PWD}/node-1/config/initialBalancesSk.pem:/home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem"
+   - "${PWD}/node-1/config/initialNodesSk.pem:/home/elrond/elrond-nodes/node-0/config/initialNodesSk.pem"
+   - "${PWD}/node-1/db:/home/elrond/elrond-nodes/node-0/db"
