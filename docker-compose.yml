@@ -1,9 +1,9 @@
 version: '3.2'
 services:
  autoupdater:
-  container_name: autoupdater
+  container_name: elrond-updater
   build:
-   context: ./ElrondUpdater/
+   context: ./elrond-updater/
    dockerfile: Dockerfile
   restart: always
   volumes:

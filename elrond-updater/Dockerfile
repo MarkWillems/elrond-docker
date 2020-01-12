@@ -5,6 +5,6 @@ RUN apk upgrade --no-cache && \
 
 STOPSIGNAL SIGINT
 WORKDIR /opt
-ADD autoupdater.sh /opt/autoupdater.sh
-RUN chmod +x /opt/autoupdater.sh
-CMD ["/opt/autoupdater.sh"]
+ADD updater.sh /opt/updater.sh
+RUN chmod +x /opt/updater.sh
+CMD ["/opt/updater.sh"]
