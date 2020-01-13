@@ -1,5 +1,14 @@
 version: '3.2'
 services:
+ autoupdater:
+  container_name: autoupdater
+  build:
+   context: ./elrond-updater/
+   dockerfile: Dockerfile
+  restart: always
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
+   - "./volumes/:/volumes"
  elrond-1:
   image: elrond:0.1
   container_name: nodename

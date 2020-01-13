@@ -15,8 +15,6 @@ if ! [ -d "$NODE_HOME/db" ]; then
   keys
 fi 
 
-chmod 700 $NODE_HOME/config/initialNodesSk.pem
-chmod 700 $NODE_HOME/config/initialBalancesSk.pem
 sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
 
 CURRENT=$($NODE_HOME/node -v)
