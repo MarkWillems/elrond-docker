@@ -1,8 +1,20 @@
 #!/bin/bash
+source /home/elrond/elrond-go-scripts-v2/config/functions.cfg
+
 NODE_NAME="piet-1"
 # This works for the official scripts
 NODE_HOME=/home/elrond/elrond-nodes/node-0
 CUSTOM_HOME=/home/elrond
+WORKDIR=$NODE_HOME
+GOPATH=$CUSTOM_HOME/go
+if ! [ -d "$NODE_HOME/db" ]; then
+
+echo "reisntall"
+  
+  install
+  build_keygen
+  keys
+fi 
 
 chmod 700 $NODE_HOME/config/initialNodesSk.pem
 chmod 700 $NODE_HOME/config/initialBalancesSk.pem

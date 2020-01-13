@@ -18,7 +18,8 @@ git_clone
 build_keygen
 build_node
 install
+install_utils
 keys
 
-mkdir -p /home/elrond/elrond-nodes/node-0/db
 /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
+rm /home/elrond/elrond-nodes/node-0/ -rf
