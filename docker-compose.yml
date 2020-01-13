@@ -2,9 +2,9 @@ version: '3.2'
 services:
  elrond-1:
   image: elrond:0.1
-  container_name: elrond-1
+  container_name: nodename
   restart: unless-stopped
   ports:
    - 8081:8080
   volumes:
-          - "./volumes/node-1/:/home/elrond/elrond-nodes/node-0/"
+          - "./volumes/nodename/:/home/elrond/elrond-nodes/node-0/"

@@ -28,4 +28,5 @@ ADD  --chown=elrond:elrond install_elrond.sh /tmp/install_elrond.sh
 RUN chmod +x /tmp/install_elrond.sh && /tmp/install_elrond.sh
 ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
 RUN chmod +x /home/elrond/entrypoint.sh
+RUN mkdir -p  /home/elrond/elrond-nodes/node-0/ && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/ 
 CMD ["/home/elrond/entrypoint.sh"]

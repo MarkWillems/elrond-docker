@@ -9,8 +9,7 @@ WORKDIR=$NODE_HOME
 GOPATH=$CUSTOM_HOME/go
 if ! [ -d "$NODE_HOME/db" ]; then
 
-echo "reisntall"
-  
+  echo "reisntall"
   install
   build_keygen
   keys
