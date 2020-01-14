@@ -16,4 +16,4 @@ services:
   ports:
    - <api_port>:8080
   volumes:
-          - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
+   - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
