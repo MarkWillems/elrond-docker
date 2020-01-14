@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -y && apt-get upgrade -y 
-RUN apt install -y git sudo apt-utils curl wget gcc systemd nano 
+RUN apt install -y git sudo apt-utils curl wget gcc systemd nano unzip
 # Add the elrond user so the nodes dont run as root
 RUN useradd -ms /bin/bash elrond
 # sudo password is not required for the elrond user because of the update scripts
