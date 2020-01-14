@@ -1,32 +1,34 @@
-FROM ubuntu:18.04
+#!/bin/bash
+source /home/elrond/elrond-go-scripts-v2/config/functions.cfg
 
-ENV DEBIAN_FRONTEND noninteractive
+# This works for the official scripts
+NODE_HOME=/home/elrond/elrond-nodes/node-0
+CUSTOM_HOME=/home/elrond
+WORKDIR=$NODE_HOME
+GOPATH=$CUSTOM_HOME/go
+NODE_KEYS_LOCATION="$NODE_HOME/VALIDATOR_KEYS"
+INDEX=0
+mkdir -p $NODE_KEYS_LOCATION
+if ! [ -d "$NODE_HOME/db" ]; then
+  echo "Initial run for $NODE_NAME"
+  install
+  build_keygen
+  keys
+fi
 
-RUN apt-get update -y && apt-get upgrade -y 
-RUN apt install -y git sudo apt-utils curl wget gcc systemd nano unzip
-# Add the elrond user so the nodes dont run as root
-RUN useradd -ms /bin/bash elrond
-# sudo password is not required for the elrond user because of the update scripts
-RUN bash -c 'echo "elrond ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
+sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
 
-ENV GO_VERSION=1.13.6
-RUN wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz \
-    && tar -xvf go${GO_VERSION}.linux-amd64.tar.gz \
-    && mv go /usr/local \
-    && rm go${GO_VERSION}.linux-amd64.tar.gz \
-    && apt-get clean
-
-ENV GOROOT=/usr/local/go
-ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
-USER elrond
-WORKDIR /home/elrond
-ENV GOPATH=/home/elrond/go 
-RUN mkdir -p $GOPATH/src/github.com/ElrondNetwork
-RUN git clone https://github.com/ElrondNetwork/elrond-go-scripts-v2
-ADD  --chown=elrond:elrond install_elrond.sh /tmp/install_elrond.sh
-RUN chmod +x /tmp/install_elrond.sh && /tmp/install_elrond.sh
-ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
-RUN chmod +x /home/elrond/entrypoint.sh
-RUN mkdir -p  /home/elrond/elrond-nodes/node-0/ && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/ 
-CMD ["/home/elrond/entrypoint.sh"]
+CURRENT=$($NODE_HOME/node -v)
+#See current available version
+LATEST=$(curl --silent "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+if [[ $CURRENT =~ $LATEST ]]; then
+    echo "Node $NODE_NAME is up to date with version $CURRENT."
+else
+    echo "Node $NODE_NAME with version $CURRENT is not the latest $LATEST, start updating"
+    /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
+fi
+# make sure node got enough permission to read the keys
+chmod 700 $NODE_HOME/config/initialNodesSk.pem
+chmod 700 $NODE_HOME/config/initialBalancesSk.pem
+echo "starting $NODE_NAME"
+cd $NODE_HOME && ./node -use-log-view -rest-api-interface localhost:8080
