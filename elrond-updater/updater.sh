@@ -5,7 +5,7 @@ echo "$(date +%x_%H:%M:%S) start the update provess"
 
 function while_check {
     while true; do
-        echo "$(date +%x_%H:%M:%S) starting an update round"
+        echo "[$(date +%x_%H:%M:%S)] starting an update round"
 
         for dir in /volumes/*/ ; do
             echo "[$(date +%x_%H:%M:%S)] check to see  if container $(basename $dir) is running"
@@ -15,7 +15,8 @@ function while_check {
             echo "[$(date +%x_%H:%M:%S)] container $(basename $dir) found"
 
             if [ ! -f /volumes/$(basename $dir)/node ]; then
-                echo "$(date +%x_%H:%M:%S) /volumes/$(basename $dir)/node not found"
+                echo "[$(date +%x_%H:%M:%S)] /volumes/$(basename $dir)/node not found"
+                continue
             fi
 
             CURRENT="$(/volumes/$(basename $dir)/node -v)"
