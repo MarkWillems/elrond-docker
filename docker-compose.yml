@@ -6,7 +6,7 @@ services:
    context: ./elrond-updater/
    dockerfile: Dockerfile
   environment:
-   - GITHUBTOKEN: $GITHUBTOKEN
+   - GITHUBTOKEN=YOURGITHUBTOKEN
   restart: always
   volumes:
    - /var/run/docker.sock:/var/run/docker.sock
@@ -17,7 +17,7 @@ services:
   restart: unless-stopped
   environment:
    - NODE_NAME=<node-name>
-   - GITHUBTOKEN: $GITHUBTOKEN
+   - GITHUBTOKEN=YOURGITHUBTOKEN
   ports:
    - <api_port>:8080
   volumes:
