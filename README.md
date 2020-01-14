@@ -1,7 +1,7 @@
 # elrond-docker
-This is the first setup for docker and autoupdating with staying as close as possible to the official scripts.
+This is a simple setup for docker with staying as close as possible to the official scripts.
 
-Its not complete yet.
+Its not complete yet as of yet.
 
 Alternatives:
 - https://github.com/mrz1703/elrond-node
