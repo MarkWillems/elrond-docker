@@ -8,9 +8,9 @@ This is a simple setup for Docker and staying as close as possible to using the 
 
 There is a sidecar container with check for new version, its checks the node version of each container and restart the container if the Node version is outdated. This mechanisme is due to systemd missing and the container is tagged with botn. So its a bit curious but the containers are updating themselves at startup.
 
-#How to use
+# How to use
 
-##Prerequisites
+## Prerequisites
 - Have Docker installed on your server: see <a href="https://docs.docker.com/install/" target="_blank">https://docs.docker.com/install/</a>
 
 TL;DR for Ubuntu 18.04
@@ -31,6 +31,7 @@ sudo mkdir -p volumes && chown -R 1000:1000 volumes/
 docker build /opt/elrond-docker/elrond-node/ -t elrond:botn
 docker-compose build
 ```
+The data of all the nodes will be in the volumes directory.
 
 ## Configure nodes
 For every node you want to run
@@ -38,6 +39,13 @@ For every node you want to run
 cd /opt/elrond-docker
 mkdir -p volumes/<node-name>
 chown -R 1000:1000 volumes/
+```
+### Import existing key
+It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in de VALIDATOR_KEYS map.
+```
+mkdir -p /opt/elrond-docker/volume/<node-name>/VALIDATOR_KEYS/
+```
+Place the node-0.zip in this directory.
 
 Alternatives:
 - https://github.com/mrz1703/elrond-node
