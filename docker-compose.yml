@@ -13,6 +13,8 @@ services:
   image: elrond:botn
   container_name: nodename
   restart: unless-stopped
+  environment:
+   - NODE_NAME=<node-name>
   ports:
    - <api_port>:8080
   volumes:
