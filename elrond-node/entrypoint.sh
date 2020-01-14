@@ -2,7 +2,6 @@
 source /home/elrond/elrond-go-scripts-v2/config/functions.cfg
 
 # This works for the official scripts
-
 NODE_HOME=/home/elrond/elrond-nodes/node-0
 CUSTOM_HOME=/home/elrond
 WORKDIR=$NODE_HOME
@@ -12,11 +11,11 @@ INDEX=0
 
 mkdir -p $NODE_KEYS_LOCATION
 if ! [ -d "$NODE_HOME/db" ]; then
-  echo "reinstall"
+  echo "Initial run for $NODE_NAME"
   install
   build_keygen
   keys
-fi 
+fi
 
 sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
 
@@ -24,9 +23,9 @@ CURRENT=$($NODE_HOME/node -v)
 #See current available version
 LATEST=$(curl --silent "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 if [[ $CURRENT =~ $LATEST ]]; then
-    echo "Node version $CURRENT it up to date."
+    echo "Node $NODE_NAME is up to date with version $CURRENT."
 else
-    echo "Node version $CURRENT is not the latest $LATEST, start updating"
+    echo "Node $NODE_NAME with version $CURRENT is not the latest $LATEST, start updating"
     /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 fi
 # make sure node got enough permission to read the keys
