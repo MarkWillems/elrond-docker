@@ -15,6 +15,7 @@ There is a sidecar container with check for new version, its checks the node ver
 
 TL;DR for Ubuntu 18.04
 ```
+apt install -y docker.io
 systemctl start docker
 systemctl enable docker
 curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
