@@ -8,6 +8,10 @@ This is a simple setup for Docker and staying as close as possible to using the 
 
 There is a sidecar container with check for new version, its checks the node version of each container and restart the container if the Node version is outdated. This mechanisme is made because systemd is missing in a container. So its a bit curious but the containers are updating themselves at startup. It made to fit for Battle of the Nodes in mind and therefore supporting erasing databases etc.
 
+Alternatives:
+- https://github.com/mrz1703/elrond-node
+- https://github.com/ElrondNetwork/elrond-go-scripts-v2 (official scripts)
+
 # How to use
 
 ## Prerequisites
@@ -121,6 +125,4 @@ How to restart a node?
  docker restart <node-name>
 ```
 
-Alternatives:
-- https://github.com/mrz1703/elrond-node
-- https://github.com/ElrondNetwork/elrond-go-scripts-v2 (official scripts)
+
