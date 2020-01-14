@@ -107,6 +107,11 @@ Start all the nodes with running the docker-compose.yml file.
 docker-compose up -d
 ```
 ## Faq
+How to open termui of Elrond
+```
+docker exec -it <node-name> /home/elrond/elrond-utils/termui
+
+```
 How to see the logging of a node?
 ```
  docker logs <node-name> --follow
