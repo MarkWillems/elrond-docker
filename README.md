@@ -29,7 +29,7 @@ cd /opt
 sudo git clone https://github.com/MarkWillems/elrond-docker.git
 cd elrond-docker/
 sudo mkdir -p volumes && chown -R 1000:1000 volumes/
-docker build /opt/elrond-docker/elrond-node/ -t elrond:botn
+docker build ./elrond-node/ -t elrond:botn
 ```
 The data of all the nodes will be in the volumes directory.
 
