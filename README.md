@@ -36,7 +36,7 @@ The data of all the nodes will be in the volumes directory.
 ## Configure your nodes
 
 ### For every node you want to run
-This should be scripted later on but this are the steps for now
+This can and should be scripted later on but this are the steps for now.
 
 #### 1. Create node data directory
 To persist the data, create a new subdirectory in de volumes map. The directory should match the name of your node.
@@ -50,7 +50,7 @@ chown -R 1000:1000 volumes/
 #### 1.1 Import existing key
 It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the directory.
 
-#### 2 Edit docker-compose.yml
+#### 2. Edit docker-compose.yml
 You need to edit the docker-compose.yml for every node you want to add. 
 Duplicate the <node-name> block and replace this with the name of the node and the desired api port, add this block to the file:
 ```
