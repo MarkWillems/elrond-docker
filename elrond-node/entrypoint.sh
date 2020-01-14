@@ -1,7 +1,6 @@
 #!/bin/bash
 source /home/elrond/elrond-go-scripts-v2/config/functions.cfg
 
-NODE_NAME="piet-1"
 # This works for the official scripts
 
 NODE_HOME=/home/elrond/elrond-nodes/node-0
