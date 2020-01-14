@@ -13,7 +13,7 @@ services:
    - "./volumes/:/volumes"
  <node-name>:
   image: elrond:botn
-  container_name: nodename
+  container_name: <nodename>
   restart: unless-stopped
   environment:
    - NODE_NAME=<node-name>
