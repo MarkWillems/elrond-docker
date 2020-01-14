@@ -10,7 +10,7 @@ services:
    - /var/run/docker.sock:/var/run/docker.sock
    - "./volumes/:/volumes"
  <node-name>:
-  image: <node-name>:botn
+  image: elrond:botn
   container_name: nodename
   restart: unless-stopped
   ports:
