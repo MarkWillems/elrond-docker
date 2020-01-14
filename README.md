@@ -1,4 +1,4 @@
-# elrond-docker
+# Elrond Docker
 This is a simple setup for Docker and staying as close as possible to using the official scripts.
 
 * Run multiply nodes
