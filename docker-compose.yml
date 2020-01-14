@@ -17,6 +17,7 @@ services:
   restart: unless-stopped
   environment:
    - NODE_NAME=<node-name>
+   - GITHUBTOKEN: $GITHUBTOKEN
   ports:
    - <api_port>:8080
   volumes:
