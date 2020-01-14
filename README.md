@@ -58,6 +58,8 @@ Duplicate the <node-name> block and replace this with the name of the node and t
   image: elrond:botn
   container_name: nodename
   restart: unless-stopped
+  environment:
+   - NODE_NAME=<node-name>
   ports:
    - <api_port>:8080
   volumes:
@@ -81,6 +83,8 @@ services:
   image: elrond:botn
   container_name: nodename
   restart: unless-stopped
+  environment:
+   - NODE_NAME=example-1
   ports:
    - 8080:8080
   volumes:
@@ -89,6 +93,8 @@ services:
   image: elrond:botn
   container_name: nodename
   restart: unless-stopped
+  environment:
+   - NODE_NAME=example-2
   ports:
    - 8080:8080
   volumes:
