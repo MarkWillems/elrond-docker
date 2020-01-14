@@ -106,6 +106,16 @@ Start all the nodes with running the docker-compose.yml file.
 ```
 docker-compose up -d
 ```
+## Faq
+How to see the logging of a node?
+```
+ docker logs <node-name> --follow
+```
+How to restart a node?
+```
+ docker restart <node-name>
+```
+
 Alternatives:
 - https://github.com/mrz1703/elrond-node
 - https://github.com/ElrondNetwork/elrond-go-scripts-v2 (official scripts)
