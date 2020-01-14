@@ -30,7 +30,6 @@ sudo git clone https://github.com/MarkWillems/elrond-docker.git
 cd elrond-docker/
 sudo mkdir -p volumes && chown -R 1000:1000 volumes/
 docker build /opt/elrond-docker/elrond-node/ -t elrond:botn
-docker-compose build
 ```
 The data of all the nodes will be in the volumes directory.
 
@@ -44,7 +43,7 @@ To persist the data, create a new subdirectory in de volumes map. The directory 
 
 ```
 cd /opt/elrond-docker
-mkdir -p /opt/elrond-docker/volume/<node-name>/VALIDATOR_KEYS/
+mkdir -p /opt/elrond-docker/volumes/<node-name>/VALIDATOR_KEYS/
 chown -R 1000:1000 volumes/
 ```
 
