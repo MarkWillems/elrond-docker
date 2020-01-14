@@ -39,7 +39,7 @@ The data of all the nodes will be in the volumes directory.
 ### For every node you want to run
 This should be scripted later on but this are the steps for now
 
-#### 1. Create data directory
+#### 1. Create node data directory
 To persist the data, create a new subdirectory in de volumes map. The directory should match the name of your node.
 
 ```
@@ -53,21 +53,9 @@ It reuses the mechanisme of the official scripts, so it scans for an node-0.zip 
 
 #### 2 Edit docker-compose.yml
 You need to edit the docker-compose.yml for every node you want to add. 
-Duplicate the <node-name> block and replace this with the name of the node and the desired api port.
-
+Duplicate the <node-name> block and replace this with the name of the node and the desired api port, add this block to the file:
 ```
-version: '3.2'
-services:
- autoupdater:
-  container_name: autoupdater
-  build:
-   context: ./elrond-updater/
-   dockerfile: Dockerfile
-  restart: always
-  volumes:
-   - /var/run/docker.sock:/var/run/docker.sock
-   - "./volumes/:/volumes"
- <node-name>:
+  <node-name>:
   image: elrond:botn
   container_name: nodename
   restart: unless-stopped
@@ -75,9 +63,8 @@ services:
    - <api_port>:8080
   volumes:
    - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
-```
-
-For example if I want two run two nodes named example-1 and example-2 than this should be the compose file (besides creating two subdirectories in the volume directory: 
+```   
+For example if I want two run two nodes which are named example-1 and example-2 than this should be the compose file (besides creating two subdirectories as described in step 1): 
    
 ```
 version: '3.2'
@@ -108,7 +95,12 @@ services:
   volumes:
    - "./volumes/example-2/:/home/elrond/elrond-nodes/node-0/"
 ```
+## Running
 
+Start all the nodes with running the docker-compose.yml file.
+```
+docker-compose up -d
+```
 Alternatives:
 - https://github.com/mrz1703/elrond-node
 - https://github.com/ElrondNetwork/elrond-go-scripts-v2 (official scripts)
