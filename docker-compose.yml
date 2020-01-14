@@ -5,6 +5,8 @@ services:
   build:
    context: ./elrond-updater/
    dockerfile: Dockerfile
+  environment:
+   - GITHUBTOKEN: $GITHUBTOKEN
   restart: always
   volumes:
    - /var/run/docker.sock:/var/run/docker.sock
