@@ -20,9 +20,9 @@ function while_check {
 
             CURRENT="$(/volumes/$(basename $dir)/node -v)"
             if [ -z "$GITHUBTOKEN" ]; then 
-                LATEST="tags/$(curl --silent "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
+                LATEST="$(curl --silent "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
             else      
-                LATEST="tags/$(curl --silent -H "Authorization: token $GITHUBTOKEN" "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
+                LATEST="$(curl --silent -H "Authorization: token $GITHUBTOKEN" "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
             fi
             if [[ $CURRENT =~ $LATEST ]]; then
                 echo "[$(date +%x_%H:%M:%S)] container $(basename $dir) is running up to date with version $CURRENT"
