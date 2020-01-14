@@ -9,11 +9,11 @@ services:
   volumes:
    - /var/run/docker.sock:/var/run/docker.sock
    - "./volumes/:/volumes"
- elrond-1:
-  image: elrond:0.1
+ <node-name>:
+  image: <node-name>:0.1
   container_name: nodename
   restart: unless-stopped
   ports:
-   - 8081:8080
+   - <api_port>:8080
   volumes:
-          - "./volumes/nodename/:/home/elrond/elrond-nodes/node-0/"
+          - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
