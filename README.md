@@ -6,7 +6,7 @@ This is a simple setup for Docker and staying as close as possible to using the 
 * Autoupdate (containers are updated with the official scripts)
 * Every start the containers updates itself if required
 
-There is a sidecar container with check for new version, its checks the node version of each container and restart the container if the Node version is outdated. This mechanisme is made because systemd is missing in a container. So its a bit curious but the containers are updating themselves at startup. It made to fit for Battle of the Nodes in mind and therefore supporting erasing databases etc.
+There is a sidecar container which checks the latest release, that version is validated against each container running Node version and the sidecar restarts the container if his Node version is outdated. This mechanisme is made because systemd is missing in a container. So its a bit curious but the containers are updating themselves at startup. It is made to fit for Battle of the Nodes in mind, therefore supporting erasing databases etc which the guided by the elrond scripts.
 
 Alternatives:
 - https://github.com/mrz1703/elrond-node
