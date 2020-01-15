@@ -56,7 +56,9 @@ It reuses the mechanisme of the official scripts, so it scans for an node-0.zip 
 
 #### 2. Edit docker-compose.yml
 You need to edit the docker-compose.yml for every node you want to add. 
-Duplicate the <node-name> block and replace this with the name of the node and the desired api port, add this block to the file:
+Duplicate the <node-name> block and replace this with the name of the node and the desired api port (BE AWARE that this opens the port public so firewall this otherwise remove the ''ports:' part).
+  
+ Add this block to the file:
 ```
   <node-name>:
   image: elrond:botn
