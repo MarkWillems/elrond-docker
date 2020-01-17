@@ -61,8 +61,8 @@ case "$1" in
 
     for i in $(seq 1 $NUMBEROFNODES);
     do
-    INDEX=$(( $i - 1 ))
-    create_node
+        INDEX=$(( $i - 1 ))
+        create_node
     done
     echo -e ""
     setGitHubToken
@@ -85,47 +85,46 @@ case "$1" in
 
     for dir in ./volumes/*/ ; do
 
-    node_name="$(basename $dir)"
-    echo -e "- Generating docker file for $node_name"
+        node_name="$(basename $dir)"
+        echo -e "- Generating docker file for $node_name"
 
-    port=$((8081+$node_number))
-    sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
-    sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
-    node_number=$node_number+1
-    echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
+        port=$((8081+$node_number))
+        sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
+        sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
+        node_number=$node_number+1
+        echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
     done
 
     compose_args="-f autoupdater.yml "
     for dir in ./*.node.yml ; do
         compose_args="$compose_args -f $(basename $dir)"
     done
-    sudo chown -R 1000:1000 volumes
     echo -e ""
     echo -e "Start docker-compose with this command:"
-    echo -e "docker-compose $compose_args up -d  --remove-orphans"
+    echo -e "docker-compose $compose_args stop"
     echo -e ""
-    docker-compose $compose_args up -d  --remove-orphans
+    docker-compose $compose_args stop
     echo -e ""
-    echo -e "${GREEN}Nodes started in the background${NC}"
+    echo -e "${GREEN}Nodes stopped${NC}"
     echo -e ""
 ;;
 'start')
     echo -e "Start the nodes"
-    echo -e "- Generating docker templates"
+    echo -e "- Clearing docker templates"
     rm *.node.yml -f
-    echo -e "${GREEN}- Generating docker templates done!${NC}"
+    echo -e "${GREEN}- Clearing docker templates done!${NC}"
     node_number=0
 
     for dir in ./volumes/*/ ; do
 
-    node_name="$(basename $dir)"
-    echo -e "- Generating docker file for $node_name"
+        node_name="$(basename $dir)"
+        echo -e "- Generating docker file for $node_name"
 
-    port=$((8081+$node_number))
-    sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
-    sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
-    node_number=$node_number+1
-    echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
+        port=$((8081+$node_number))
+        sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
+        sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
+        node_number=$node_number+1
+        echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
     done
 
     compose_args="-f autoupdater.yml "
