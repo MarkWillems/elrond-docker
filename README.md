@@ -31,6 +31,7 @@ Execute the commands below. Maybye wrap it in a script later on. This will insta
 ```
 cd /opt
 sudo git clone https://github.com/MarkWillems/elrond-docker.git
+cd elrond-docker
 ```
 
 The data of all the nodes will be stored in the volumes directory.
@@ -39,7 +40,6 @@ The data of all the nodes will be stored in the volumes directory.
 Run the command below to initialise your node the first time
 
 ``
-cd elrond-docker
 ./script.sh setup
 ``
 
