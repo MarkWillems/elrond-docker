@@ -26,18 +26,19 @@ curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compo
 chmod +x /usr/local/bin/docker-compose
 ```
 
+
 ## Installation
-Execute the commands below. Maybye wrap it in a script later on. This will install the nodes in /opt/elrond-docker.
+Execute the commands below. This will install the nodes in /opt/elrond-docker, if desired change the location.
 ```
 cd /opt
 sudo git clone https://github.com/MarkWillems/elrond-docker.git
 cd elrond-docker
 ```
 
-The data of all the nodes will be stored in the volumes directory.
+The data of all the nodes will be stored in the volumes subdirectory.
 
 ## 1. Configure your nodes
-Run the command below to initialise your node the first time
+Run the command below to initialise your node the first time.
 
 ``
 ./script.sh setup
@@ -46,7 +47,7 @@ Run the command below to initialise your node the first time
 First enter the number of nodes you want to and their names, second add the github token if you got this.
 
 ### 1.1 Import existing key
-It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the ./volume/<node-name> directory, this directory is created in step 1. The two keys (initialBalancesSk.pem and initialNodesSk.pem) should be placed in this zip file named 'node-0.zip'
+It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the ./volume/<node-name>/VALIDATOR_KEYS directory, This directory is created in step 1. The two keys (initialBalancesSk.pem and initialNodesSk.pem) should be placed in this zip file named 'node-0.zip'
 
 ## 2.Running
 
