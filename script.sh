@@ -73,9 +73,9 @@ case "$1" in
 ;;
 'stop')
     echo -e "Stop the nodes"
-    echo -e "- Generating docker templates"
+    echo -e "- Clearing existing docker templates"
     rm *.node.yml -f
-    echo -e "${GREEN}- Generating docker templates done!${NC}"
+    echo -e "${GREEN}- Clearing docker templates done!${NC}"
     node_number=0
 
     for dir in ./volumes/*/ ; do
