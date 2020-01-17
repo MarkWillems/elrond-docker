@@ -11,7 +11,7 @@ INDEX=0
 
 mkdir -p $NODE_KEYS_LOCATION
 if ! [ -d "$NODE_HOME/db" ]; then
-  echo "Initial run for $NODE_NAME"
+  echo "[$(date +%x_%H:%M:%S)] Initial run for $NODE_NAME"
   install
   build_keygen
   keys
@@ -27,9 +27,9 @@ else
     LATEST="$(curl --silent -H "Authorization: token $GITHUBTOKEN" "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
 fi
 if [[ $CURRENT =~ $LATEST ]]; then
-    echo "Node $NODE_NAME is up to date with version $CURRENT."
+    echo "[$(date +%x_%H:%M:%S)] Node $NODE_NAME is up to date with version $CURRENT."
 else
-    echo "Node $NODE_NAME with version $CURRENT is not the latest $LATEST, start updating"
+    echo "[$(date +%x_%H:%M:%S)] Node $NODE_NAME with version $CURRENT is not the latest $LATEST, start auto upgrade"
     /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 fi
 # make sure node got enough permission to read the keys

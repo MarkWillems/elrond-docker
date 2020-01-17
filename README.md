@@ -31,100 +31,63 @@ Execute the commands below. Maybye wrap it in a script later on. This will insta
 ```
 cd /opt 
 sudo git clone https://github.com/MarkWillems/elrond-docker.git
-cd elrond-docker/
-sudo mkdir -p volumes && chown -R 1000:1000 volumes/
-docker build ./elrond-node/ -t elrond:botn
-```
-The data of all the nodes will be in the volumes directory.
-
-## Configure your nodes
-
-### For every node you want to run
-This can and should be scripted later on but this are the steps for now.
-
-#### 1. Create node data directory
-To persist the data, create a new subdirectory in de volumes map. The directory should match the name of your node.
 
 ```
-cd /opt/elrond-docker
-mkdir -p /opt/elrond-docker/volumes/<node-name>/VALIDATOR_KEYS/
-chown -R 1000:1000 volumes/
+
+The data of all the nodes will be stored in the volumes directory.
+
+## 1. Configure your nodes
+Run the command below to initialise your node the first time
+
+``
+cd elrond-docker
+./script.sh setup
+``
+
+First enter the number of nodes you want to and their names, second add the github token if you got this.
+
+### 1.1 Import existing key
+It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the ./volume/<node-name> directory, this directory is created in step 1. The two keys (initialBalancesSk.pem and initialNodesSk.pem) should be placed in this zip file named 'node-0.zip'
+
+## 2.Running
+
+Start all the nodes
+```
+./script.sh start
 ```
 
-#### 1.1 Import existing key
-It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the directory.
+## Other commands
 
-#### 2. Edit docker-compose.yml
-You need to edit the docker-compose.yml for every node you want to add. 
-Duplicate the <node-name> block and replace this with the name of the node and the desired api port (BE AWARE that this opens the port public so firewall this otherwise remove the ''ports:' part).
-  
- Add this block to the file:
-```
-  <node-name>:
-  image: elrond:botn
-  container_name: nodename
-  restart: unless-stopped
-  environment:
-   - NODE_NAME=<node-name>
-  ports:
-   - <api_port>:8080
-  volumes:
-   - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
-```   
-For example if I want two run two nodes which are named example-1 and example-2 than this should be the compose file (besides creating two subdirectories as described in step 1): 
-   
-```
-version: '3.2'
-services:
- autoupdater:
-  container_name: autoupdater
-  build:
-   context: ./elrond-updater/
-   dockerfile: Dockerfile
-  restart: always
-  volumes:
-   - /var/run/docker.sock:/var/run/docker.sock
-   - "./volumes/:/volumes"
- example-1:
-  image: elrond:botn
-  container_name: nodename
-  restart: unless-stopped
-  environment:
-   - NODE_NAME=example-1
-  ports:
-   - 8080:8080
-  volumes:
-   - "./volumes/example-1/:/home/elrond/elrond-nodes/node-0/"
- example-2:
-  image: elrond:botn
-  container_name: nodename
-  restart: unless-stopped
-  environment:
-   - NODE_NAME=example-2
-  ports:
-   - 8080:8080
-  volumes:
-   - "./volumes/example-2/:/home/elrond/elrond-nodes/node-0/"
-```
-## Running
+### Stopping of all nodes
 
-Start all the nodes with running the docker-compose.yml file.
+Stop all the nodes
 ```
-docker-compose up -d
+./script.sh start
 ```
-## Faq
-How to open termui of Elrond
-```
-docker exec -it <node-name> /home/elrond/elrond-utils/termui
+
+### How to open termui of Elrond to get some stats of your node
 
 ```
-How to see the logging of a node?
+docker exec -it <node-name> termui
+
+```
+### How to see the logging of a node?
+
 ```
  docker logs <node-name> --follow
 ```
-How to restart a node?
+
+### How to restart a node?
 ```
  docker restart <node-name>
 ```
 
+### (re)set the github token
+```
+./script.sh github
+```
 
+### Rebuild the container images
+```
+./script.sh rebuild
+```

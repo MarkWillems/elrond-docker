@@ -1,18 +1,18 @@
 #!/bin/bash
 
 set -e
-echo "$(date +%x_%H:%M:%S) start the update provess"
+echo "[$(date +%x_%H:%M:%S)] start the update process"
 
 function while_check {
     while true; do
-        echo "[$(date +%x_%H:%M:%S)] starting an update round"
+        echo "[$(date +%x_%H:%M:%S)] Starting an update round"
 
         for dir in /volumes/*/ ; do
-            echo "[$(date +%x_%H:%M:%S)] check to see  if container $(basename $dir) is running"
+            echo "[$(date +%x_%H:%M:%S)] Check to see  if container $(basename $dir) is running"
             if [  "$(docker ps -q -f name=$(basename dir))" ]; then
                 continue
             fi
-            echo "[$(date +%x_%H:%M:%S)] container $(basename $dir) found"
+            echo "[$(date +%x_%H:%M:%S)] Container $(basename $dir) is running so check version"
 
             if [ ! -f /volumes/$(basename $dir)/node ]; then
                 echo "[$(date +%x_%H:%M:%S)] /volumes/$(basename $dir)/node not found"

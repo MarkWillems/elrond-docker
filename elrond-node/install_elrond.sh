@@ -23,3 +23,4 @@ keys
 
 /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 rm /home/elrond/elrond-nodes/node-0/ -rf
+cp /home/elrond/elrond-utils/termui /home/elrond -f

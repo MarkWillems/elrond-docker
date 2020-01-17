@@ -1,0 +1,13 @@
+version: '3.2'
+services:
+ <node-name>:
+  image: elrond:botn
+  container_name: <node-name>
+  restart: unless-stopped
+  environment:
+   - NODE_NAME=<node-name>
+   - GITHUBTOKEN=${GITHUB_TOKEN}
+  ports:
+   - <api_port>:8080
+  volumes:
+   - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
