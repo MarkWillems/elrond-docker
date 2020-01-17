@@ -61,7 +61,7 @@ Start all the nodes
 
 Stop all the nodes
 ```
-./script.sh start
+./script.sh stop
 ```
 
 ### How to open termui of Elrond to get some stats of your node
