@@ -67,6 +67,11 @@ case "$1" in
     echo -e ""
     setGitHubToken
     echo -e ""
+    read -p "The first time to container need to be build, this can take a few minutes." 
+    read -p "Press any key to start to building! " YEAHYEAH
+    echo -e ""
+    rebuild
+    echo -e ""
     echo -e "${GREEN} Initialising done${NC}"
     echo -e "${CYAN} Remember that if you want to import your existing keys,  you should copy them to the /volumes/<node-name>/VALIDATOR_KEYS/ directory before the start of the nodes.${NC}"
     sudo chown -R 1000:1000 volumes/
