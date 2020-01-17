@@ -29,9 +29,8 @@ chmod +x /usr/local/bin/docker-compose
 ## Installation
 Execute the commands below. Maybye wrap it in a script later on. This will install the nodes in /opt/elrond-docker.
 ```
-cd /opt 
+cd /opt
 sudo git clone https://github.com/MarkWillems/elrond-docker.git
-
 ```
 
 The data of all the nodes will be stored in the volumes directory.
@@ -68,7 +67,7 @@ Stop all the nodes
 ### How to open termui of Elrond to get some stats of your node
 
 ```
-docker exec -it <node-name> termui
+docker exec -it <node-name> ./termui
 
 ```
 ### How to see the logging of a node?
