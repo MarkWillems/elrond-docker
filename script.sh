@@ -67,7 +67,7 @@ case "$1" in
     echo -e ""
     setGitHubToken
     echo -e ""
-    read -p "The first time to container need to be build, this can take a few minutes." 
+    echo -e "The first time to container need to be build, this can take a few minutes." 
     read -p "Press any key to start to building! " YEAHYEAH
     echo -e ""
     rebuild
