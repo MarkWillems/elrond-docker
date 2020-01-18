@@ -15,7 +15,7 @@ Alternatives:
 # How to use
 
 ## Prerequisites
-- Have Docker installed on your server: see <a href="https://docs.docker.com/install/" target="_blank">https://docs.docker.com/install/</a>
+- Have Docker and Docker Compose installed on your server: see <a href="https://docs.docker.com/install/" target="_blank">https://docs.docker.com/install/</a>
 
 TL;DR for Ubuntu 18.04
 ```
