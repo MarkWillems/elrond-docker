@@ -35,4 +35,4 @@ fi
 # make sure node got enough permission to read the keys
 chmod 700 $NODE_HOME/config/initialNodesSk.pem
 chmod 700 $NODE_HOME/config/initialBalancesSk.pem
-cd $NODE_HOME && ./node -use-log-view -rest-api-interface localhost:8080
+cd $NODE_HOME && ./node -use-log-view -rest-api-interface :8080
