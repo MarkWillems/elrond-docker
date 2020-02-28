@@ -14,7 +14,7 @@ if ! [ -d "$NODE_HOME/db" ]; then
   echo "[$(date +%x_%H:%M:%S)] Initial run for $NODE_NAME"
   install
   build_keygen
-  keys
+  yes | keys
 fi
 
 sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
