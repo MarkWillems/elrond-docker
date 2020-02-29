@@ -10,7 +10,7 @@ RUN useradd -ms /bin/bash elrond
 RUN bash -c 'echo "elrond ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 
 ENV GO_VERSION=1.13.8
-# set correct architecture -> "uname -m"
+# set correct architecture -> "uname -m" (x86_64 -> amd64, aarch64 -> arm64)
 ENV ARCH="amd64"
 RUN wget https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz \
     && tar -xvf go${GO_VERSION}.linux-${ARCH}.tar.gz \
