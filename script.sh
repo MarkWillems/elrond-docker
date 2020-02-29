@@ -9,7 +9,7 @@ NC='\x1B[0m'
 
 function rebuild {
     docker build ./elrond-node/ -t elrond:botn
-    docker-compose -f autoupdater.yml build
+    docker-compose -f autoupdater.yml build --no-cache
     echo -e "${GREEN} Done rebuilding containers${NC}"
 }
 
@@ -22,7 +22,39 @@ function setGitHubToken {
   echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
   echo -e "${GREEN} Token set!${NC}"
 }
+function stop_nodes {
+    echo -e "Stop the nodes"
+    echo -e "- Clearing existing docker templates"
+    rm *.node.yml -f
+    echo -e "${GREEN}- Clearing docker templates done!${NC}"
+    node_number=0
 
+    for dir in ./volumes/*/ ; do
+
+        node_name="$(basename $dir)"
+        echo -e "- Generating docker file for $node_name"
+
+        port=$((8081+$node_number))
+        sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
+        sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
+        node_number=$node_number+1
+        echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
+    done
+
+    compose_args="-f autoupdater.yml "
+    for dir in ./*.node.yml ; do
+        compose_args="$compose_args -f $(basename $dir)"
+    done
+    echo -e ""
+    echo -e "Start docker-compose with this command:"
+    echo -e "docker-compose $compose_args stop"
+    echo -e ""
+    docker-compose $compose_args stop
+    echo -e ""
+    echo -e "${GREEN}Nodes stopped${NC}"
+    echo -e ""
+
+}
 function create_node {
   echo -e
   echo -e "${GREEN} Time to choose a node name for node number $(($INDEX+1)) ${NC}"
@@ -77,36 +109,7 @@ case "$1" in
     sudo chown -R 1000:1000 volumes/
 ;;
 'stop')
-    echo -e "Stop the nodes"
-    echo -e "- Clearing existing docker templates"
-    rm *.node.yml -f
-    echo -e "${GREEN}- Clearing docker templates done!${NC}"
-    node_number=0
-
-    for dir in ./volumes/*/ ; do
-
-        node_name="$(basename $dir)"
-        echo -e "- Generating docker file for $node_name"
-
-        port=$((8081+$node_number))
-        sed 's/<node-name>/'"$node_name"'/g' node.yml.tmpl > $node_name.node.yml
-        sed -i 's/<api_port>/'"127.0.0.1:$port"'/g' $node_name.node.yml
-        node_number=$node_number+1
-        echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
-    done
-
-    compose_args="-f autoupdater.yml "
-    for dir in ./*.node.yml ; do
-        compose_args="$compose_args -f $(basename $dir)"
-    done
-    echo -e ""
-    echo -e "Start docker-compose with this command:"
-    echo -e "docker-compose $compose_args stop"
-    echo -e ""
-    docker-compose $compose_args stop
-    echo -e ""
-    echo -e "${GREEN}Nodes stopped${NC}"
-    echo -e ""
+ stop_nodes
 ;;
 'start')
     echo -e "Start the nodes"
@@ -141,12 +144,23 @@ case "$1" in
     echo -e "${GREEN}Nodes started in the background${NC}"
     echo -e ""
 ;;
+'clear')
+    echo -e ""
+    echo -e "Start of clearing the nodes data and configs, only leaving the keys in place."
+    stop_nodes
+    for dir in ./volumes/*/ ; do
+        node_name="$(basename $dir)"
+        echo -e "- Clearing data and config fir $node_name"
+        rm volumes/$node_name/db/ volumes/$node_name/node volumes/$node_name/config/ volumes/$node_name/stats/ -rf
+    done 
+    echo -e "${GREEN} Done clearing containers ${NC}"
+;;
 'remove-node')
     echo -e ""
     echo -e "To remove node, just delete the subdirectory in the ./volumes directory and run ./script start"
     echo -e ""
 ;;
 *)
-  echo "Usage: Missing parameter ! [setup|start|stop|github|rebuild|remove-node]"
+  echo "Usage: Missing parameter ! [setup|start|stop|github|rebuild|clear|remove-node]|"
   ;;
 esac
