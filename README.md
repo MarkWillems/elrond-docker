@@ -91,3 +91,8 @@ docker exec -it <node-name> ./termui
 ```
 ./script.sh rebuild
 ```
+### Clear all nodes data and force a fresh start
+```
+./script.sh rebuild
+./script.sh clear
+```
