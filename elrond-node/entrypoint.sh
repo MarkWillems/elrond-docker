@@ -8,7 +8,7 @@ WORKDIR=$NODE_HOME
 GOPATH=$CUSTOM_HOME/go
 NODE_KEYS_LOCATION="$NODE_HOME/VALIDATOR_KEYS"
 INDEX=0
-sed -i 's/GITHUBTOKEN=""/GITHUBTOKEN="$GITHUBTOKEN""/g' /home/elrond/elrond-go-scripts-v2/config/variables.cfg
+sed -i 's/^GITHUBTOKEN=""/GITHUBTOKEN="$GITHUBTOKEN"/g' /home/elrond/elrond-go-scripts-v2/config/variables.cfg
 
 mkdir -p $NODE_KEYS_LOCATION
 if ! [ -d "$NODE_HOME/db" ]; then
