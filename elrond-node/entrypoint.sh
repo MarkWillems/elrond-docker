@@ -11,6 +11,12 @@ INDEX=0
 sed -i 's/^GITHUBTOKEN=""/GITHUBTOKEN="$GITHUBTOKEN"/g' /home/elrond/elrond-go-scripts-v2/config/variables.cfg
 
 mkdir -p $NODE_KEYS_LOCATION
+PEM_FILE=/home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem
+if test -f "$FILE"; then
+   echo "[$(date +%x_%H:%M:%S)] found pem files, zipping to node-0.zip so the scripts work"
+   cd /home/elrond/elrond-nodes/node-0/config && zip node-0.zip *.pem && cp node-0.zip /home/elrond/elrond-nodes/node-0/VALIDATOR_KEYS/ -f
+fi
+
 if ! [ -d "$NODE_HOME/db" ]; then
   echo "[$(date +%x_%H:%M:%S)] Initial run for $NODE_NAME"
   install

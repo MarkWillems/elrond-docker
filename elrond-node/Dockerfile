@@ -2,8 +2,9 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y && apt-get upgrade -y 
-RUN apt install -y git sudo apt-utils curl wget gcc systemd nano unzip
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt install -y git sudo apt-utils curl wget zip gcc systemd nano unzip
 # Add the elrond user so the nodes dont run as root
 RUN useradd -ms /bin/bash elrond
 # sudo password is not required for the elrond user because of the update scripts
@@ -30,6 +31,9 @@ RUN mkdir -p $GOPATH/src/github.com/ElrondNetwork
 RUN git clone https://github.com/ElrondNetwork/elrond-go-scripts-v2
 ADD  --chown=elrond:elrond install_elrond.sh /tmp/install_elrond.sh
 RUN chmod +x /tmp/install_elrond.sh && /tmp/install_elrond.sh
+ADD  --chown=elrond:elrond healthcheck.sh /home/elrond/healthcheck.sh
+RUN chmod +x /home/elrond/healthcheck.sh
+HEALTHCHECK --interval=5m --retries=2 --timeout=30s --start-period=10m CMD /home/elrond/healthcheck.sh || exit 1
 ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
 RUN chmod +x /home/elrond/entrypoint.sh
 RUN mkdir -p  /home/elrond/elrond-nodes/node-0/ && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/ 
