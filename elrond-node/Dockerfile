@@ -36,6 +36,6 @@ RUN chmod +x /home/elrond/healthcheck.sh
 HEALTHCHECK --interval=5m --retries=2 --timeout=30s --start-period=10m CMD /home/elrond/healthcheck.sh || exit 1
 ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
 RUN chmod +x /home/elrond/entrypoint.sh
-RUN mkdir -p  /home/elrond/elrond-nodes/node-0/ && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/ 
+RUN mkdir -p  /home/elrond/elrond-nodes/node-0/config && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/config/ 
 CMD ["/home/elrond/entrypoint.sh"]
 

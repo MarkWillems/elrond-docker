@@ -12,8 +12,16 @@ sed -i 's/^GITHUBTOKEN=""/GITHUBTOKEN="$GITHUBTOKEN"/g' /home/elrond/elrond-go-s
 
 mkdir -p $NODE_KEYS_LOCATION
 PEM_FILE=/home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem
-if test -f "$FILE"; then
-   echo "[$(date +%x_%H:%M:%S)] found pem files, zipping to node-0.zip so the scripts work"
+
+if [ -z "$INITIAL_BALANCES_SK_0" ]; then
+    echo "[$(date +%x_%H:%M:%S)] No environment pam set"
+else
+   echo "[$(date +%x_%H:%M:%S)] Found environment keys"
+   echo "[$(date +%x_%H:%M:%S)] getting $KEY_INDEX key index"
+   INITIAL_BALANCES_SK="INITIAL_BALANCES_SK_$KEY_INDEX"
+   INITIAL_NODES_SK="INITIAL_NODES_SK_$KEY_INDEX"
+   cat  /home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem
+   cat  /home/elrond/elrond-nodes/node-0/config/initialNodesSk.pem
    cd /home/elrond/elrond-nodes/node-0/config && zip node-0.zip *.pem && cp node-0.zip /home/elrond/elrond-nodes/node-0/VALIDATOR_KEYS/ -f
 fi
 
