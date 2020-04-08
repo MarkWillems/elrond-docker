@@ -20,8 +20,9 @@ else
    echo "[$(date +%x_%H:%M:%S)] getting $KEY_INDEX key index"
    INITIAL_BALANCES_SK="INITIAL_BALANCES_SK_$KEY_INDEX"
    INITIAL_NODES_SK="INITIAL_NODES_SK_$KEY_INDEX"
-   cat  /home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem
-   cat  /home/elrond/elrond-nodes/node-0/config/initialNodesSk.pem
+   
+   echo "${!INITIAL_BALANCES_SK}" > /home/elrond/elrond-nodes/node-0/config/initialBalancesSk.pem
+   echo "${!INITIAL_NODES_SK}" > /home/elrond/elrond-nodes/node-0/config/initialNodesSk.pem
    cd /home/elrond/elrond-nodes/node-0/config && zip node-0.zip *.pem && cp node-0.zip /home/elrond/elrond-nodes/node-0/VALIDATOR_KEYS/ -f
 fi
 
@@ -45,6 +46,7 @@ if [[ $CURRENT =~ $LATEST ]]; then
     echo "[$(date +%x_%H:%M:%S)] Node $NODE_NAME is up to date with version $CURRENT."
 else
     echo "[$(date +%x_%H:%M:%S)] Node $NODE_NAME with version $CURRENT is not the latest $LATEST, start auto upgrade"
+    /home/elrond/elrond-go-scripts-v2/script.sh upgrade
     /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 fi
 # make sure node got enough permission to read the keys
