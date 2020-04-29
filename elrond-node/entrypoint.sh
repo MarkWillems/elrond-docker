@@ -18,6 +18,14 @@ if ! [ -d "$NODE_HOME/db" ]; then
   yes | keys
 fi
 
+if  [ "$NODE_KEYS_LOCATION/validatorKey.pem" ]; then
+  echo "[$(date +%x_%H:%M:%S)] validatorKey.pem found, zipping it for scripts"
+  ls -alll $NODE_KEYS_LOCATION
+  cd $NODE_KEYS_LOCATION && rm node-0.zip -f && zip node-0.zip *.pem 
+else
+ echo "[$(date +%x_%H:%M:%S)] validatorKey.pem NOT found, this will run as a observer"
+fi
+
 sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
 
 CURRENT=$($NODE_HOME/node -v)
@@ -34,6 +42,6 @@ else
     /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 fi
 # make sure node got enough permission to read the keys
-chmod 700 $NODE_HOME/config/initialNodesSk.pem
-chmod 700 $NODE_HOME/config/initialBalancesSk.pem
+chmod 700 $NODE_HOME/config/validatorKey.pem
+#chmod 700 $NODE_HOME/config/initialBalancesSk.pem
 cd $NODE_HOME && ./node -use-log-view -rest-api-interface :8080

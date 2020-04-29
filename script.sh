@@ -8,8 +8,7 @@ GREEN='\x1B[0;32m'
 NC='\x1B[0m'
 
 function rebuild {
-    docker build ./elrond-node/ -t elrond:botn
-    docker-compose -f autoupdater.yml build --no-cache
+    docker build ./elrond-node/ -t elrond:botn --no-cache
     echo -e "${GREEN} Done rebuilding containers${NC}"
 }
 
@@ -41,7 +40,7 @@ function stop_nodes {
         echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
     done
 
-    compose_args="-f autoupdater.yml "
+    compose_args=" "
     for dir in ./*.node.yml ; do
         compose_args="$compose_args -f $(basename $dir)"
     done
@@ -130,7 +129,7 @@ case "$1" in
         echo -e "${GREEN}- Generating docker file for $node_name done!${NC}"
     done
 
-    compose_args="-f autoupdater.yml "
+    compose_args=" "
     for dir in ./*.node.yml ; do
         compose_args="$compose_args -f $(basename $dir)"
     done
