@@ -11,30 +11,30 @@ INDEX=0
 sed -i 's/^GITHUBTOKEN=""/GITHUBTOKEN="$GITHUBTOKEN"/g' /home/elrond/elrond-go-scripts-v2/config/variables.cfg
 
 mkdir -p $NODE_KEYS_LOCATION
+
+
 if ! [ -d "$NODE_HOME/db" ]; then
   echo "[$(date +%x_%H:%M:%S)] Initial run for $NODE_NAME"
+  if  [  "$NODE_KEYS_LOCATION/node-0.zip" ]; then
+   echo "[$(date +%x_%H:%M:%S)] Found node-0.zip, so clearing to be sure"
+   rm $NODE_HOME/config/initialBalancesSk.pem -f
+   rm $NODE_HOME/config/initialNodesSk.pem -f
+  fi
   install
   build_keygen
   yes | keys
-fi
-
-if  [ "$NODE_KEYS_LOCATION/validatorKey.pem" ]; then
-  echo "[$(date +%x_%H:%M:%S)] validatorKey.pem found, zipping it for scripts"
-  ls -alll $NODE_KEYS_LOCATION
-  cd $NODE_KEYS_LOCATION && rm node-0.zip -f && zip node-0.zip *.pem 
-else
- echo "[$(date +%x_%H:%M:%S)] validatorKey.pem NOT found, this will run as a observer"
 fi
 
 sed -i "s/NodeDisplayName = \"\"/NodeDisplayName = \"${NODE_NAME//\//\\/}\"/" $NODE_HOME/config/prefs.toml
 
 CURRENT=$($NODE_HOME/node -v)
 #See current available version
-if [ -z "$GITHUBTOKEN" ]; then 
+if [ -z "$GITHUBTOKEN" ]; then
     LATEST="$(curl --silent "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
-else      
+else
     LATEST="$(curl --silent -H "Authorization: token $GITHUBTOKEN" "https://api.github.com/repos/ElrondNetwork/elrond-go/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
 fi
+
 if [[ $CURRENT =~ $LATEST ]]; then
     echo "[$(date +%x_%H:%M:%S)] Node $NODE_NAME is up to date with version $CURRENT."
 else
@@ -42,6 +42,7 @@ else
     /home/elrond/elrond-go-scripts-v2/script.sh auto_upgrade
 fi
 # make sure node got enough permission to read the keys
+if [ -f "$NODE_HOME/config/initialNodesSk.pem" ]; then cp -f $NODE_HOME/config/initialNodesSk.pem $NODE_HOME/config/validatorKey.pem; fi
+
 chmod 700 $NODE_HOME/config/validatorKey.pem
-#chmod 700 $NODE_HOME/config/initialBalancesSk.pem
 cd $NODE_HOME && ./node -use-log-view -rest-api-interface :8080
