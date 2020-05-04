@@ -6,7 +6,7 @@ This is a simple setup for Docker and staying as close as possible to using the 
 * Autoupdate (containers are updated with the official scripts)
 * Every start the containers updates itself if required
 
-There is a sidecar container which checks the latest release, that version is validated against each container running Node version and the sidecar restarts the container if his Node version is outdated. This mechanisme is made because systemd is missing in a container. So its a bit curious but the containers are updating themselves at startup. It is made to fit for Battle of the Nodes in mind, therefore supporting erasing databases etc which is controlled by the official Elrond scripts.
+There is a docker healthcheck build in the Docker specification which checks for the latest release, that version is validated against the current official release. The healthcheck fails if its not the latest version, which forces docker to restart the node. So its a bit curious but the containers are updating themselves at startup. It is made to fit for Battle of the Nodes in mind, therefore supporting erasing databases etc which is controlled by the official Elrond scripts. This will not make it to the mainnet version.
 
 Alternatives:
 - https://github.com/mrz1703/elrond-node
@@ -54,7 +54,7 @@ Run the command below to initialise your node the first time.
 First enter the number of nodes you want to and their names, second add the github token if you got this.
 
 ### 1.1 Import existing key
-It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the ./volume/node-name/VALIDATOR_KEYS directory, This directory is created in step 1. The two keys (initialBalancesSk.pem and initialNodesSk.pem) should be placed in this zip file named 'node-0.zip'
+It reuses the mechanisme of the official scripts, so it scans for an node-0.zip in the VALIDATOR_KEYS map. If you want to use your own keys than place the node-0.zip in the ./volume/node-name/VALIDATOR_KEYS directory, This directory is created in step 1. The key validatorKey.pem should be placed in this zip file named 'node-0.zip'
 
 ## 2.Running
 
