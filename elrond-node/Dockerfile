@@ -27,12 +27,9 @@ USER elrond
 WORKDIR /home/elrond
 ENV GOPATH=/home/elrond/go 
 RUN mkdir -p $GOPATH/src/github.com/ElrondNetwork
-RUN git clone https://github.com/ElrondNetwork/elrond-go-scripts-v2
+RUN git clone https://github.com/ElrondNetwork/elrond-go-scripts-mainnet.git
 ADD  --chown=elrond:elrond install_elrond.sh /tmp/install_elrond.sh
 RUN chmod +x /tmp/install_elrond.sh && /tmp/install_elrond.sh
-ADD  --chown=elrond:elrond healthcheck.sh /home/elrond/healthcheck.sh
-RUN chmod +x /home/elrond/healthcheck.sh
-HEALTHCHECK --interval=5m --retries=2 --timeout=30s --start-period=10m CMD /home/elrond/healthcheck.sh || exit 1
 ADD  --chown=elrond:elrond entrypoint.sh /home/elrond/entrypoint.sh
 RUN chmod +x /home/elrond/entrypoint.sh
 RUN mkdir -p  /home/elrond/elrond-nodes/node-0/ && chown 1000:1000 -R /home/elrond/elrond-nodes/node-0/ 
