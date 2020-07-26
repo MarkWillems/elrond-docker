@@ -14,12 +14,6 @@ mkdir -p $NODE_KEYS_LOCATION
 
 
 if ! [ -d "$NODE_HOME/db" ]; then
-  echo "[$(date +%x_%H:%M:%S)] Initial run for $NODE_NAME"
-  if  [  "$NODE_KEYS_LOCATION/node-0.zip" ]; then
-   echo "[$(date +%x_%H:%M:%S)] Found node-0.zip, so clearing to be sure"
-  fi
-  install
-  build_keygen
   yes | keys
 fi
 

@@ -11,15 +11,7 @@ RUN bash -c 'echo "elrond ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo
 RUN sudo ln -s /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so
 RUN cd /lib && wget https://github.com/wasmerio/wasmer/releases/download/0.12.0/libwasmer_runtime_c_api.so
 
-ENV GO_VERSION=1.13.5
 # set correct architecture -> "uname -m" (x86_64 -> amd64, aarch64 -> arm64)
-ENV ARCH="amd64"
-RUN wget https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz \
-    && tar -xvf go${GO_VERSION}.linux-${ARCH}.tar.gz \
-    && mv go /usr/local \
-    && rm go${GO_VERSION}.linux-${ARCH}.tar.gz \
-    && apt-get clean
-
 ENV GOROOT=/usr/local/go
 ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
