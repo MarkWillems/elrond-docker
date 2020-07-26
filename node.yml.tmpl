@@ -8,6 +8,6 @@ services:
    - NODE_NAME=<node-name>
    - GITHUBTOKEN=${GITHUB_TOKEN}
   ports:
-   - <api_port>:8080
+   - 37373-38383/tcp
   volumes:
    - "./volumes/<node-name>/:/home/elrond/elrond-nodes/node-0/"
