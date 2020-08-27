@@ -1,3 +1,7 @@
+
+## Warning, there seems to be an official docker container these days.
+See https://docs.elrond.com/validators/install/how-to-use-the-docker-image
+
 # Elrond Docker
 This is a simple setup for Docker and staying as close as possible to using the official scripts.
 
